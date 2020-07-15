@@ -1,12 +1,12 @@
 # Laravel + Docker 環境構築ハンズオン
 * 3層アーキテクチャのコンテナの構築
-* ウェブサーバー(web)
-* nginxで静的コンテンツ配信サーバを構築
-* アプリケーションサーバー(app)
-* nginxを経由してPHPを動作させるアプリケーションサーバを構築
-* PHPパッケージ管理ツールComposerのインストール
-* データベースサーバー(db)
-* MySQLデータベースサーバーの構築
+** ウェブサーバー(web)
+*** nginxで静的コンテンツ配信サーバを構築
+** アプリケーションサーバー(app)
+*** nginxを経由してPHPを動作させるアプリケーションサーバを構築
+*** PHPパッケージ管理ツールComposerのインストール
+** データベースサーバー(db)
+*** MySQLデータベースサーバーの構築
 * Laravelをインストールしてwelcome画面の表示
 * LaravelとMySQLを連携し、マイグレーションを実行
 
@@ -23,7 +23,28 @@ docker-compose version 1.25.5, build 8a1c60f6
 ```
 
 # 最終的なディレクトリ構成
-
+```
+.
+├── README.md
+├── docker
+│   ├── mysql
+│   │   └── my.cnf
+│   ├── nginx
+│   │   └── default.conf
+│   └── php
+│       ├── Dockerfile
+│       └── php.ini
+├── docker-compose.yml
+├── logs
+│   ├── access.log
+│   ├── error.log
+│   ├── mysql-error.log
+│   ├── mysql-query.log
+│   ├── mysql-slow.log
+│   └── php-error.log
+└── src
+    └── readme.md
+```
 
 ## 作業ディレクトリを作成
 ```
@@ -47,8 +68,8 @@ TZ=Asia/Tokyo
 ```
 [mac] $ touch docker-compose.yml
 ```
-
-```:touch docker-compose.yml
+touch docker-compose.yml
+```
 version: "3"
 services:
   app:
@@ -74,8 +95,8 @@ services:
 [mac] $ mkdir -p docker/php
 [mac] $ touch docker/php/Dockerfile
 ```
-
-```:Dockerfile
+:Dockerfile
+```
 FROM php:7.3-fpm-alpine
 LABEL maintainer "your-name"
 
@@ -97,7 +118,8 @@ RUN set -eux && \
 [mac] $ touch docker/php/php.ini
 ```
 
-```:php.ini
+php.ini
+```
 error_reporting = E_ERROR | E_WARNING | E_PARSE | E_NOTICE
 display_errors = stdout
 display_startup_errors = on
@@ -121,9 +143,6 @@ build & up
 ```
 [mac] $ docker-compose up -d --build
 [mac] $ docker-compose ps
-```
-
-```:docker-compose ps
             Name                          Command              State    Ports  
 -------------------------------------------------------------------------------
 docker-laravel-handson_app_1   docker-php-entrypoint php-fpm   Up      9000/tcp
@@ -131,8 +150,8 @@ docker-laravel-handson_app_1   docker-php-entrypoint php-fpm   Up      9000/tcp
 ```
 
 ## ウェブサーバー(web)コンテナを作成
-app コンテナの設定と同じインデントレベル
-```:docker-compose.yml
+docker-compose.yml
+```
 web:
     image: nginx:1.17-alpine
     depends_on:
@@ -146,13 +165,14 @@ web:
     environment:
       - TZ=${TZ}
 ```
+app コンテナの設定と同じインデントレベルにする
 
 ```
 [mac] $ mkdir docker/nginx
 [mac] $ touch docker/nginx/default.conf
 ```
-
-```:default.conf
+default.conf
+```
 server {
     listen 80;
     root /work/public;
@@ -175,13 +195,11 @@ server {
 }
 ```
 
+build & up
 ```
 [mac] $ docker-compose down
 [mac] $ docker-compose up -d --build
 [mac] $ docker-compose ps
-```
-
-```:docker-compose ps
             Name                          Command              State           Ports        
 --------------------------------------------------------------------------------------------
 docker-laravel-handson_app_1   docker-php-entrypoint php-fpm   Up      9000/tcp             
@@ -221,9 +239,8 @@ Laravel Framework 6.0.4
 Laravel ウェルカム画面の表示 http://127.0.0.1:10080
 
 ## データベース(db)コンテナを作成
-db コンテナの設定は web コンテナの設定と同じインデントレベル  
-volumes はトップレベル(servicesと同じレベル)  
-```:docker-compose.yml
+:docker-compose.yml
+```
 db:
     image: mysql:8.0
     volumes:
@@ -240,13 +257,16 @@ db:
 volumes:
   db-store:
 ```
+db コンテナの設定は web コンテナの設定と同じインデントレベルにする  
+volumes はトップレベル(servicesと同じレベル)にする  
 
 ```
 [mac] $ mkdir docker/mysql
 [mac] $ touch docker/mysql/my.cnf
 ```
 
-```:my.cnf
+my.cnf
+```
 [mysqld]
 # character set / collation
 character-set-server = utf8mb4
@@ -284,9 +304,6 @@ build & up
 [mac] $ docker-compose down
 [mac] $ docker-compose up -d --build
 [mac] $ docker-compose ps
-```
-
-```:docker-compose ps
             Name                          Command              State           Ports        
 --------------------------------------------------------------------------------------------
 docker-laravel-handson_app_1   docker-php-entrypoint php-fpm   Up      9000/tcp             
