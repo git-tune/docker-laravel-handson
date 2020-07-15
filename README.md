@@ -57,7 +57,8 @@ docker-compose version 1.25.5, build 8a1c60f6
 [mac] $ touch .env
 ```
 
-```:.env
+[.env]
+```
 DB_NAME=homestead
 DB_USER=homestead
 DB_PASS=secret
@@ -68,7 +69,8 @@ TZ=Asia/Tokyo
 ```
 [mac] $ touch docker-compose.yml
 ```
-touch docker-compose.yml
+
+[touch docker-compose.yml]
 ```
 version: "3"
 services:
@@ -95,7 +97,8 @@ services:
 [mac] $ mkdir -p docker/php
 [mac] $ touch docker/php/Dockerfile
 ```
-:Dockerfile
+
+[Dockerfile]
 ```
 FROM php:7.3-fpm-alpine
 LABEL maintainer "your-name"
@@ -118,7 +121,7 @@ RUN set -eux && \
 [mac] $ touch docker/php/php.ini
 ```
 
-php.ini
+[php.ini]
 ```
 error_reporting = E_ERROR | E_WARNING | E_PARSE | E_NOTICE
 display_errors = stdout
@@ -150,7 +153,7 @@ docker-laravel-handson_app_1   docker-php-entrypoint php-fpm   Up      9000/tcp
 ```
 
 ## ウェブサーバー(web)コンテナを作成
-docker-compose.yml
+[docker-compose.yml]
 ```
 web:
     image: nginx:1.17-alpine
@@ -171,7 +174,8 @@ app コンテナの設定と同じインデントレベルにする
 [mac] $ mkdir docker/nginx
 [mac] $ touch docker/nginx/default.conf
 ```
-default.conf
+
+[default.conf]
 ```
 server {
     listen 80;
@@ -239,7 +243,7 @@ Laravel Framework 6.0.4
 Laravel ウェルカム画面の表示 http://127.0.0.1:10080
 
 ## データベース(db)コンテナを作成
-:docker-compose.yml
+[docker-compose.yml]
 ```
 db:
     image: mysql:8.0
@@ -265,7 +269,7 @@ volumes はトップレベル(servicesと同じレベル)にする
 [mac] $ touch docker/mysql/my.cnf
 ```
 
-my.cnf
+[my.cnf]
 ```
 [mysqld]
 # character set / collation
