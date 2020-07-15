@@ -11,8 +11,8 @@
 * LaravelとMySQLを連携し、マイグレーションを実行
 
 # docker, docker-compose のインストール
-[Mac] https://docs.docker.com/docker-for-mac/install
-[Windows] https://docs.docker.com/docker-for-windows/install
+[Mac] https://docs.docker.com/docker-for-mac/install  
+[Windows] https://docs.docker.com/docker-for-windows/install  
 
 ```
 [mac] $ docker --version
@@ -201,8 +201,8 @@ webコンテナの確認
 [mac] $ echo "<?php phpinfo();" > src/public/phpinfo.php
 ```
 
-「Hello World」が表示されることを確認する http://127.0.0.1:10080/index.html 
-phpinfoの情報が表示されることを確認する http://127.0.0.1:10080/phpinfo.php
+「Hello World」が表示されることを確認する http://127.0.0.1:10080/index.html  
+phpinfoの情報が表示されることを確認する http://127.0.0.1:10080/phpinfo.php  
 
 確認用に作成したHTML, PHPファイルを削除
 ```
@@ -221,8 +221,8 @@ Laravel Framework 6.0.4
 Laravel ウェルカム画面の表示 http://127.0.0.1:10080
 
 ## データベース(db)コンテナを作成
-db コンテナの設定は web コンテナの設定と同じインデントレベル
-volumes はトップレベル(servicesと同じレベル)
+db コンテナの設定は web コンテナの設定と同じインデントレベル  
+volumes はトップレベル(servicesと同じレベル)  
 ```:docker-compose.yml
 db:
     image: mysql:8.0
