@@ -1,4 +1,4 @@
-# Laravel + Docker 環境構築ハンズオン
+# Laravel + Docker 環境構築
 * 3層アーキテクチャのコンテナの構築
 * ウェブサーバー(web)  
  nginxで静的コンテンツ配信サーバを構築  
